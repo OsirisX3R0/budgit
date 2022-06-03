@@ -31,7 +31,10 @@ const MyApp = ({ Component, pageProps }) => {
             main: "#118c4f",
           },
           secondary: {
-            main: "#B39C0C",
+            main: "#b39c0c",
+          },
+          green: {
+            main: "#0baa32c",
           },
           light: {
             main: "#eee",

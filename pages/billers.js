@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import {
   Box,
   Button,
   Container,
+  InputAdornment,
   MenuItem,
   Modal,
   Select,
@@ -16,17 +17,69 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 
+const defaultBiller = {
+  name: "",
+  category: "",
+  day_of_month: "",
+  default_amount: "",
+};
+
+const newBillerReducer = (state, action) => {
+  switch (action.type) {
+    case "NAME":
+      return { ...state, name: action.name };
+    case "CATEGORY":
+      return { ...state, category: action.category };
+    case "DOM":
+      return { ...state, day_of_month: action.day_of_month };
+    case "DEFAULT":
+      return { ...state, default_amount: action.default_amount };
+    default:
+      return state;
+  }
+};
+
+const modalStyles = {
+  maxWidth: "400px",
+  backgroundColor: "#f5f5f5",
+  color: "#333",
+  border: "1px solid #aaa",
+  borderRadius: "3px",
+  margin: "1rem auto",
+  padding: "1rem",
+};
+
 const Billers = () => {
   const [billers, setBillers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
+  const [newBiller, dispatchNewBiller] = useReducer(
+    newBillerReducer,
+    defaultBiller
+  );
 
   const getBillers = () => {
     axios.get("/api/billers").then(({ data }) => setBillers(data));
   };
 
+  const createBiller = () => {
+    axios.post("/api/billers/create", newBiller).then(() => {
+      setShowCreate(false);
+      getBillers();
+    });
+  };
+
   useEffect(() => {
     getBillers();
   }, []);
+
+  const handleNewBillerName = (name) =>
+    dispatchNewBiller({ type: "NAME", name });
+  const handleNewBillerCategory = (category) =>
+    dispatchNewBiller({ type: "CATEGORY", category });
+  const handleNewBillerDOM = (date_of_month) =>
+    dispatchNewBiller({ type: "DOM", date_of_month });
+  const handleNewBillerDefault = (default_amount) =>
+    dispatchNewBiller({ type: "DEFAULT", default_amount });
 
   const body = billers.length ? (
     billers.map((biller) => (
@@ -44,55 +97,93 @@ const Billers = () => {
   );
 
   const create = (
-    <Modal open={showCreate}>
-      <Typography variant="h3">New Biller</Typography>
+    <Modal open={showCreate} onClose={() => setShowCreate(false)}>
+      <Box sx={modalStyles}>
+        <Typography variant="h3">New Biller</Typography>
 
-      <TextField label="Name" variant="standard" />
+        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+          <TextField
+            label="Name"
+            variant="standard"
+            fullWidth
+            value={newBiller.name}
+            onChange={(e) => handleNewBillerName(e.target.value)}
+          />
+        </Box>
 
-      <Select label="Category">
-        <MenuItem value={"electricity"}>Electricity</MenuItem>
-        <MenuItem value={"water"}>Water</MenuItem>
-        <MenuItem value={"gas"}>Gas</MenuItem>
-        <MenuItem value={"phone"}>Phone</MenuItem>
-        <MenuItem value={"internet"}>Internet</MenuItem>
-        <MenuItem value={"auto"}>Auto</MenuItem>
-      </Select>
+        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+          <Select
+            label="Category"
+            value={newBiller.category}
+            fullWidth
+            onChange={(e) => handleNewBillerCategory(e.target.value)}
+          >
+            <MenuItem value={"electricity"}>Electricity</MenuItem>
+            <MenuItem value={"water"}>Water</MenuItem>
+            <MenuItem value={"gas"}>Gas</MenuItem>
+            <MenuItem value={"phone"}>Phone</MenuItem>
+            <MenuItem value={"internet"}>Internet</MenuItem>
+            <MenuItem value={"auto"}>Auto</MenuItem>
+          </Select>
+        </Box>
 
-      <Select label="Day of Month">
-        <MenuItem value={"1st"}>1st</MenuItem>
-        <MenuItem value={"2nd"}>2nd</MenuItem>
-        <MenuItem value={"3rd"}>3rd</MenuItem>
-        <MenuItem value={"4th"}>4th</MenuItem>
-        <MenuItem value={"5th"}>5th</MenuItem>
-        <MenuItem value={"6th"}>6th</MenuItem>
-        <MenuItem value={"7th"}>7th</MenuItem>
-        <MenuItem value={"8th"}>8th</MenuItem>
-        <MenuItem value={"9th"}>9th</MenuItem>
-        <MenuItem value={"10th"}>10th</MenuItem>
-        <MenuItem value={"11th"}>11th</MenuItem>
-        <MenuItem value={"12th"}>12th</MenuItem>
-        <MenuItem value={"13th"}>13th</MenuItem>
-        <MenuItem value={"14th"}>14th</MenuItem>
-        <MenuItem value={"15th"}>15th</MenuItem>
-        <MenuItem value={"16th"}>16th</MenuItem>
-        <MenuItem value={"17th"}>17th</MenuItem>
-        <MenuItem value={"18th"}>18th</MenuItem>
-        <MenuItem value={"19th"}>19th</MenuItem>
-        <MenuItem value={"20th"}>20th</MenuItem>
-        <MenuItem value={"21th"}>21th</MenuItem>
-        <MenuItem value={"22th"}>22th</MenuItem>
-        <MenuItem value={"23th"}>23th</MenuItem>
-        <MenuItem value={"24th"}>24th</MenuItem>
-        <MenuItem value={"25th"}>25th</MenuItem>
-        <MenuItem value={"26th"}>26th</MenuItem>
-        <MenuItem value={"27th"}>27th</MenuItem>
-        <MenuItem value={"28th"}>28th</MenuItem>
-        <MenuItem value={"29th"}>29th</MenuItem>
-        <MenuItem value={"30th"}>30th</MenuItem>
-        <MenuItem value={"last"}>last</MenuItem>
-      </Select>
+        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+          <Select
+            label="Day of Month"
+            value={newBiller.day_of_month}
+            fullWidth
+            onChange={(e) => handleNewBillerDOM(e.target.value)}
+          >
+            <MenuItem value={"1st"}>1st</MenuItem>
+            <MenuItem value={"2nd"}>2nd</MenuItem>
+            <MenuItem value={"3rd"}>3rd</MenuItem>
+            <MenuItem value={"4th"}>4th</MenuItem>
+            <MenuItem value={"5th"}>5th</MenuItem>
+            <MenuItem value={"6th"}>6th</MenuItem>
+            <MenuItem value={"7th"}>7th</MenuItem>
+            <MenuItem value={"8th"}>8th</MenuItem>
+            <MenuItem value={"9th"}>9th</MenuItem>
+            <MenuItem value={"10th"}>10th</MenuItem>
+            <MenuItem value={"11th"}>11th</MenuItem>
+            <MenuItem value={"12th"}>12th</MenuItem>
+            <MenuItem value={"13th"}>13th</MenuItem>
+            <MenuItem value={"14th"}>14th</MenuItem>
+            <MenuItem value={"15th"}>15th</MenuItem>
+            <MenuItem value={"16th"}>16th</MenuItem>
+            <MenuItem value={"17th"}>17th</MenuItem>
+            <MenuItem value={"18th"}>18th</MenuItem>
+            <MenuItem value={"19th"}>19th</MenuItem>
+            <MenuItem value={"20th"}>20th</MenuItem>
+            <MenuItem value={"21th"}>21th</MenuItem>
+            <MenuItem value={"22th"}>22th</MenuItem>
+            <MenuItem value={"23th"}>23th</MenuItem>
+            <MenuItem value={"24th"}>24th</MenuItem>
+            <MenuItem value={"25th"}>25th</MenuItem>
+            <MenuItem value={"26th"}>26th</MenuItem>
+            <MenuItem value={"27th"}>27th</MenuItem>
+            <MenuItem value={"28th"}>28th</MenuItem>
+            <MenuItem value={"29th"}>29th</MenuItem>
+            <MenuItem value={"30th"}>30th</MenuItem>
+            <MenuItem value={"last"}>last</MenuItem>
+          </Select>
+        </Box>
 
-      <TextField type="number" label="Default Amount" variant="standard" />
+        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+          <TextField
+            type="number"
+            label="Default Amount"
+            variant="standard"
+            fullWidth
+            value={newBiller.default_amount}
+            onChange={(e) => handleNewBillerDefault(e.target.value)}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          />
+        </Box>
+
+        <Button variant="contained" color="primary" onClick={createBiller}>
+          Create
+        </Button>
+      </Box>
     </Modal>
   );
 
@@ -103,7 +194,7 @@ const Billers = () => {
       <Box sx={{ textAlign: "right" }}>
         <Button
           variant="contained"
-          color="success"
+          color="primary"
           onClick={() => setShowCreate(true)}
         >
           + New Biller
