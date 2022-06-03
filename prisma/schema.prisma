@@ -1,0 +1,66 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+model pay_schedule {
+  id           BigInt        @id @default(autoincrement())
+  type         schedule_type
+  amount       Decimal       @db.Money
+  day_of_week  Int?
+  day_of_month Int?
+  next_occur   Int?
+  first_date   Int?
+  second_date  Int?
+}
+
+model biller {
+  id             BigInt           @id @default(autoincrement())
+  name           String           @db.VarChar
+  category       biller_category?
+  day_of_month   String
+  default_amount Int?
+  payments       payment[]
+}
+
+model payday {
+  id       BigInt    @id @default(autoincrement())
+  day      Int
+  month    Int
+  year     Int
+  amount   Int
+  payments payment[]
+}
+
+model payment {
+  id        BigInt  @id @default(autoincrement())
+  month     Int
+  year      Int
+  amount    Decimal @db.Money
+  biller_id BigInt
+  payday_id BigInt
+  biller    biller  @relation(fields: [biller_id], references: [id])
+  payday    payday  @relation(fields: [payday_id], references: [id])
+}
+
+enum schedule_type {
+  onetime
+  weekly
+  biweekly
+  semimonthly
+  monthly
+}
+
+enum biller_category {
+  electricity
+  water
+  gas
+  phone
+  internet
+  auto
+}
