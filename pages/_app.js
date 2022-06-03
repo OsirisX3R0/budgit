@@ -12,21 +12,21 @@ import FooterNav from "../src/components/core/FooterNav";
 // import App from "next/app";
 
 const MyApp = ({ Component, pageProps }) => {
-  const [colorTheme, setColorTheme] = useLocalStorage(
-    "boupon.settings.theme",
-    "light"
-  );
+  // const [colorTheme, setColorTheme] = useLocalStorage(
+  //   "boupon.settings.theme",
+  //   "light"
+  // );
 
   const theme = useMemo(
     () =>
       createTheme({
         spacing: 8,
         palette: {
-          type:
-            colorTheme === "dark" //||
-              ? // (colorTheme === "default" && prefersDarkMode)
-                "dark"
-              : "light",
+          // type:
+          //   colorTheme === "dark" //||
+          //     ? // (colorTheme === "default" && prefersDarkMode)
+          //       "dark"
+          //     : "light",
           primary: {
             main: "#118c4f",
           },
@@ -91,7 +91,7 @@ const MyApp = ({ Component, pageProps }) => {
           },
         },
       }),
-    [colorTheme]
+    []
   );
 
   return (
@@ -106,16 +106,16 @@ const MyApp = ({ Component, pageProps }) => {
         />
         <title>boupon</title>
       </Head>
-      {/* <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <ThemeProvider theme={theme}>
+        {/* <CssBaseline />
         <GlobalProvider colorTheme={colorTheme} setColorTheme={setColorTheme}>
           <CouponProvider> */}
-      <Header />
-      <Component {...pageProps} />
-      <FooterNav />
-      {/* </CouponProvider>
-        </GlobalProvider>
-      </ThemeProvider> */}
+        <Header />
+        <Component {...pageProps} />
+        <FooterNav />
+        {/* </CouponProvider>
+        </GlobalProvider>*/}
+      </ThemeProvider>
     </>
   );
 };
