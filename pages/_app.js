@@ -5,11 +5,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { useMemo } from "react";
 
 import useLocalStorage from "../src/hooks/useLocalStorage";
-import { CouponProvider } from "../src/context/CouponContext";
-import { GlobalProvider } from "../src/context/GlobalContext";
+// import { CouponProvider } from "../src/context/CouponContext";
+// import { GlobalProvider } from "../src/context/GlobalContext";
 import Header from "../src/components/core/Header";
 import FooterNav from "../src/components/core/FooterNav";
-// import App from 'next/app'
+// import App from "next/app";
 
 const MyApp = ({ Component, pageProps }) => {
   const [colorTheme, setColorTheme] = useLocalStorage(
@@ -28,10 +28,10 @@ const MyApp = ({ Component, pageProps }) => {
                 "dark"
               : "light",
           primary: {
-            main: "#53a318",
+            main: "#118c4f",
           },
           secondary: {
-            main: "#297AA3",
+            main: "#B39C0C",
           },
           light: {
             main: "#eee",
@@ -106,16 +106,16 @@ const MyApp = ({ Component, pageProps }) => {
         />
         <title>boupon</title>
       </Head>
-      <ThemeProvider theme={theme}>
+      {/* <ThemeProvider theme={theme}>
         <CssBaseline />
         <GlobalProvider colorTheme={colorTheme} setColorTheme={setColorTheme}>
-          <CouponProvider>
-            <Header />
-            <Component {...pageProps} />
-            <FooterNav />
-          </CouponProvider>
+          <CouponProvider> */}
+      <Header />
+      <Component {...pageProps} />
+      <FooterNav />
+      {/* </CouponProvider>
         </GlobalProvider>
-      </ThemeProvider>
+      </ThemeProvider> */}
     </>
   );
 };

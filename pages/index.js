@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Box, Button, Container, Typography } from "@material-ui/core";
 
-import EnterName from "../src/components/home/EnterName";
-import EnterKey from "../src/components/home/EnterKey";
-import useQueryString from "../src/hooks/useQueryString";
+// import EnterName from "../src/components/home/EnterName";
+// import EnterKey from "../src/components/home/EnterKey";
+// import useQueryString from "../src/hooks/useQueryString";
 
 const Home = () => {
-  const [showEnterKey, setShowEnterKey] = useState(false);
-  const [showEnterName, setShowEnterName] = useState(false);
-  const { key } = useQueryString();
+  // const [showEnterKey, setShowEnterKey] = useState(false);
+  // const [showEnterName, setShowEnterName] = useState(false);
+  // const { key } = useQueryString();
 
   return (
     <Container>
-      <Typography variant="h2">Welcome!</Typography>
+      Chicken Taco
+      {/* <Typography variant="h2">Welcome!</Typography>
       <Box sx={{ mb: 2 }}>
         <Button
           fullWidth
@@ -37,7 +38,7 @@ const Home = () => {
         open={showEnterKey || !!key}
         onClose={() => setShowEnterKey(false)}
         close={() => setShowEnterKey(false)}
-      />
+      /> */}
     </Container>
   );
 };
