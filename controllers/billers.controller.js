@@ -2,5 +2,7 @@ const prisma = require("../core/prisma");
 
 module.exports = {
   get: async () => await prisma.biller.findMany(),
-  create: async (biller) => await prisma.biller.create(biller),
+  create: async (data) => await prisma.biller.create({ data }),
+  update: async (id, data) =>
+    await prisma.biller.update({ where: { id }, data }),
 };

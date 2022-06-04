@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useReducer, useState } from "react";
+import { Fragment, useEffect, useMemo, useReducer, useState } from "react";
 import {
   Box,
   Button,
@@ -34,6 +34,10 @@ const newBillerReducer = (state, action) => {
       return { ...state, day_of_month: action.day_of_month };
     case "DEFAULT":
       return { ...state, default_amount: action.default_amount };
+    case "EDIT":
+      return action.biller;
+    case "RESET":
+      return defaultBiller;
     default:
       return state;
   }
@@ -51,57 +55,86 @@ const modalStyles = {
 
 const Billers = () => {
   const [billers, setBillers] = useState([]);
-  const [showCreate, setShowCreate] = useState(false);
-  const [newBiller, dispatchNewBiller] = useReducer(
-    newBillerReducer,
-    defaultBiller
-  );
+  const [creating, setCreating] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [biller, dispatchBiller] = useReducer(newBillerReducer, defaultBiller);
+
+  const handleNewBillerName = (name) => dispatchBiller({ type: "NAME", name });
+  const handleNewBillerCategory = (category) =>
+    dispatchBiller({ type: "CATEGORY", category });
+  const handleNewBillerDOM = (day_of_month) =>
+    dispatchBiller({ type: "DOM", day_of_month });
+  const handleNewBillerDefault = (default_amount) =>
+    dispatchBiller({ type: "DEFAULT", default_amount });
+  const editBiller = (biller) => dispatchBiller({ type: "EDIT", biller });
+  const resetBiller = () => dispatchBiller({ type: "RESET" });
+
+  const close = () => {
+    setCreating(false);
+    setEditing(false);
+    resetBiller();
+  };
+
+  const edit = (biller) => {
+    setEditing(true);
+    editBiller(biller);
+  };
+
+  const showModal = useMemo(() => creating || editing, [creating, editing]);
 
   const getBillers = () => {
     axios.get("/api/billers").then(({ data }) => setBillers(data));
   };
 
   const createBiller = () => {
-    axios.post("/api/billers/new", newBiller).then(() => {
-      setShowCreate(false);
+    axios.post("/api/billers/new", biller).then(() => {
+      setCreating(false);
+      resetBiller();
       getBillers();
     });
   };
+
+  const updateBiller = () => {
+    let { id, ...data } = biller;
+    axios.put(`/api/billers/${id}`, data).then(() => {
+      setEditing(false);
+      resetBiller();
+      getBillers();
+    });
+  };
+
+  const handleClick = () => (creating ? createBiller() : updateBiller());
 
   useEffect(() => {
     getBillers();
   }, []);
 
-  const handleNewBillerName = (name) =>
-    dispatchNewBiller({ type: "NAME", name });
-  const handleNewBillerCategory = (category) =>
-    dispatchNewBiller({ type: "CATEGORY", category });
-  const handleNewBillerDOM = (day_of_month) =>
-    dispatchNewBiller({ type: "DOM", day_of_month });
-  const handleNewBillerDefault = (default_amount) =>
-    dispatchNewBiller({ type: "DEFAULT", default_amount });
-
-  const body = (
+  const body = billers.length ? (
+    billers.map((biller) => (
+      <TableRow
+        key={biller.id}
+        onClick={() => edit(biller)}
+        hover
+        sx={{ cursor: "pointer" }}
+      >
+        <TableCell>{biller.name}</TableCell>
+        <TableCell>{biller.category}</TableCell>
+        <TableCell>{biller.day_of_month}</TableCell>
+        <TableCell>{biller.default_value}</TableCell>
+      </TableRow>
+    ))
+  ) : (
     <TableRow>
-      {billers.length ? (
-        billers.map((biller) => (
-          <Fragment key={biller.id}>
-            <TableCell>{biller.name}</TableCell>
-            <TableCell>{biller.category}</TableCell>
-            <TableCell>{biller.day_of_month}</TableCell>
-            <TableCell>{biller.default_value}</TableCell>
-          </Fragment>
-        ))
-      ) : (
-        <TableCell colSpan={4} align="center">
-          No users
-        </TableCell>
-      )}
+      <TableCell colSpan={4} align="center">
+        No users
+      </TableCell>
     </TableRow>
   );
 
-  const create = (
-    <Modal open={showCreate} onClose={() => setShowCreate(false)}>
+  const buttonText = creating ? "Create" : "Save";
+
+  const modal = (
+    <Modal open={showModal} onClose={close}>
       <Box sx={modalStyles}>
         <Typography variant="h3">New Biller</Typography>
 
@@ -110,7 +143,7 @@ const Billers = () => {
             label="Name"
             variant="standard"
             fullWidth
-            value={newBiller.name}
+            value={biller.name}
             onChange={(e) => handleNewBillerName(e.target.value)}
           />
         </Box>
@@ -118,7 +151,7 @@ const Billers = () => {
         <Box sx={{ width: "100%", marginBottom: "1rem" }}>
           <Select
             label="Category"
-            value={newBiller.category}
+            value={biller.category}
             fullWidth
             onChange={(e) => handleNewBillerCategory(e.target.value)}
           >
@@ -134,7 +167,7 @@ const Billers = () => {
         <Box sx={{ width: "100%", marginBottom: "1rem" }}>
           <Select
             label="Day of Month"
-            value={newBiller.day_of_month}
+            value={biller.day_of_month}
             fullWidth
             onChange={(e) => handleNewBillerDOM(e.target.value)}
           >
@@ -178,14 +211,14 @@ const Billers = () => {
             label="Default Amount"
             variant="standard"
             fullWidth
-            value={newBiller.default_amount}
+            value={biller.default_amount}
             onChange={(e) => handleNewBillerDefault(e.target.value)}
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
           />
         </Box>
 
-        <Button variant="contained" color="primary" onClick={createBiller}>
-          Create
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          {buttonText}
         </Button>
       </Box>
     </Modal>
@@ -199,7 +232,7 @@ const Billers = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setShowCreate(true)}
+          onClick={() => setCreating(true)}
         >
           + New Biller
         </Button>
@@ -215,7 +248,7 @@ const Billers = () => {
         </TableHead>
         <TableBody>{body}</TableBody>
       </Table>
-      {create}
+      {modal}
     </Container>
   );
 };

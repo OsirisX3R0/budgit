@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
       category: !req.body.category ? null : req.body.category,
       default_amount: !req.body.default_amount ? null : req.body.default_amount,
     };
-    let biller = await Billers.create({ data });
+    let biller = await Billers.create(data);
 
     res.json(biller);
   } catch (err) {
