@@ -103,6 +103,14 @@ const Billers = () => {
     });
   };
 
+  const deleteBiller = (id) => {
+    axios.delete(`/api/billers/delete/${id}`).then(() => {
+      setEditing(false);
+      resetBiller();
+      getBillers();
+    });
+  };
+
   const handleClick = () => (creating ? createBiller() : updateBiller());
 
   useEffect(() => {
@@ -220,6 +228,17 @@ const Billers = () => {
         <Button variant="contained" color="primary" onClick={handleClick}>
           {buttonText}
         </Button>
+        {editing ? (
+          <Box sx={{ marginLeft: "1rem" }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => deleteBiller(biller.id)}
+            >
+              Delete
+            </Button>
+          </Box>
+        ) : null}
       </Box>
     </Modal>
   );

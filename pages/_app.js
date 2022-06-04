@@ -9,6 +9,7 @@ import useLocalStorage from "../src/hooks/useLocalStorage";
 // import { GlobalProvider } from "../src/context/GlobalContext";
 import Header from "../src/components/core/Header";
 import FooterNav from "../src/components/core/FooterNav";
+import { red, green } from "@material-ui/core/colors";
 // import App from "next/app";
 
 const MyApp = ({ Component, pageProps }) => {
@@ -33,8 +34,13 @@ const MyApp = ({ Component, pageProps }) => {
           secondary: {
             main: "#b39c0c",
           },
-          green: {
-            main: "#0baa32c",
+          success: {
+            main: green[100],
+            contrastText: "#f5f5f5",
+          },
+          error: {
+            main: red[100],
+            contrastText: "#f5f5f5",
           },
           light: {
             main: "#eee",

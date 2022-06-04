@@ -5,4 +5,5 @@ module.exports = {
   create: async (data) => await prisma.biller.create({ data }),
   update: async (id, data) =>
     await prisma.biller.update({ where: { id }, data }),
+  delete: async (id) => await prisma.biller.delete({ where: { id } }),
 };
