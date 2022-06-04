@@ -1,7 +1,6 @@
 import Head from "next/head";
-import { createTheme } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { useMemo } from "react";
 
 import useLocalStorage from "../src/hooks/useLocalStorage";
@@ -9,7 +8,7 @@ import useLocalStorage from "../src/hooks/useLocalStorage";
 // import { GlobalProvider } from "../src/context/GlobalContext";
 import Header from "../src/components/core/Header";
 import FooterNav from "../src/components/core/FooterNav";
-import { red, green } from "@material-ui/core/colors";
+import { red, green } from "@mui/material/colors";
 // import App from "next/app";
 
 const MyApp = ({ Component, pageProps }) => {
@@ -34,14 +33,14 @@ const MyApp = ({ Component, pageProps }) => {
           secondary: {
             main: "#b39c0c",
           },
-          success: {
-            main: green[100],
-            contrastText: "#f5f5f5",
-          },
-          error: {
-            main: red[100],
-            contrastText: "#f5f5f5",
-          },
+          // success: {
+          //   main: green[100],
+          //   contrastText: "#f5f5f5",
+          // },
+          // error: {
+          //   main: red[100],
+          //   contrastText: "#f5f5f5",
+          // },
           light: {
             main: "#eee",
           },

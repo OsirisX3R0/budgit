@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import {
   ReceiptOutlined,
   Person,
   CalendarToday,
   ExitToApp,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 // import { GlobalContext } from "../../context/GlobalContext";
 

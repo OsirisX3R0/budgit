@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, Container, Typography } from "@material-ui/core";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 // import EnterName from "../src/components/home/EnterName";
 // import EnterKey from "../src/components/home/EnterKey";

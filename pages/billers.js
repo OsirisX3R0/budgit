@@ -14,7 +14,8 @@ import {
   TableRow,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 
 const defaultBiller = {
@@ -55,8 +56,11 @@ const modalStyles = {
 
 const Billers = () => {
   const [billers, setBillers] = useState([]);
+  const [createMode, setCreateMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [biller, dispatchBiller] = useReducer(newBillerReducer, defaultBiller);
 
   const handleNewBillerName = (name) => dispatchBiller({ type: "NAME", name });
@@ -70,48 +74,64 @@ const Billers = () => {
   const resetBiller = () => dispatchBiller({ type: "RESET" });
 
   const close = () => {
-    setCreating(false);
-    setEditing(false);
+    setCreateMode(false);
+    setEditMode(false);
     resetBiller();
   };
 
   const edit = (biller) => {
-    setEditing(true);
+    setEditMode(true);
     editBiller(biller);
   };
 
-  const showModal = useMemo(() => creating || editing, [creating, editing]);
+  const showModal = useMemo(
+    () => createMode || editMode,
+    [createMode, editMode]
+  );
+  const loadingBtn = useMemo(() => creating || editing, [creating, editing]);
 
   const getBillers = () => {
     axios.get("/api/billers").then(({ data }) => setBillers(data));
   };
 
   const createBiller = () => {
-    axios.post("/api/billers/new", biller).then(() => {
-      setCreating(false);
-      resetBiller();
-      getBillers();
-    });
+    setCreating(true);
+    axios
+      .post("/api/billers/new", biller)
+      .then(() => {
+        setCreateMode(false);
+        resetBiller();
+        getBillers();
+      })
+      .finally(() => setCreating(false));
   };
 
   const updateBiller = () => {
     let { id, ...data } = biller;
-    axios.put(`/api/billers/${id}`, data).then(() => {
-      setEditing(false);
-      resetBiller();
-      getBillers();
-    });
+    setEditing(true);
+    axios
+      .put(`/api/billers/${id}`, data)
+      .then(() => {
+        setEditMode(false);
+        resetBiller();
+        getBillers();
+      })
+      .finally(() => setEditing(false));
   };
 
   const deleteBiller = (id) => {
-    axios.delete(`/api/billers/delete/${id}`).then(() => {
-      setEditing(false);
-      resetBiller();
-      getBillers();
-    });
+    setDeleting(true);
+    axios
+      .delete(`/api/billers/delete/${id}`)
+      .then(() => {
+        setEditMode(false);
+        resetBiller();
+        getBillers();
+      })
+      .finally(() => setDeleting(false));
   };
 
-  const handleClick = () => (creating ? createBiller() : updateBiller());
+  const handleClick = () => (createMode ? createBiller() : updateBiller());
 
   useEffect(() => {
     getBillers();
@@ -139,7 +159,7 @@ const Billers = () => {
     </TableRow>
   );
 
-  const buttonText = creating ? "Create" : "Save";
+  const buttonText = createMode ? "Create" : "Save";
 
   const modal = (
     <Modal open={showModal} onClose={close}>
@@ -225,18 +245,24 @@ const Billers = () => {
           />
         </Box>
 
-        <Button variant="contained" color="primary" onClick={handleClick}>
+        <LoadingButton
+          variant="contained"
+          color="success"
+          loading={loadingBtn}
+          onClick={handleClick}
+        >
           {buttonText}
-        </Button>
-        {editing ? (
+        </LoadingButton>
+        {editMode ? (
           <Box sx={{ marginLeft: "1rem" }}>
-            <Button
+            <LoadingButton
               variant="contained"
-              color="secondary"
+              color="error"
+              loading={deleting}
               onClick={() => deleteBiller(biller.id)}
             >
               Delete
-            </Button>
+            </LoadingButton>
           </Box>
         ) : null}
       </Box>
@@ -250,8 +276,8 @@ const Billers = () => {
       <Box sx={{ textAlign: "right" }}>
         <Button
           variant="contained"
-          color="primary"
-          onClick={() => setCreating(true)}
+          color="success"
+          onClick={() => setCreateMode(true)}
         >
           + New Biller
         </Button>
