@@ -6,7 +6,7 @@ CREATE TYPE "biller_category" AS ENUM ('electricity', 'water', 'gas', 'phone', '
 
 -- CreateTable
 CREATE TABLE "pay_schedule" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "type" "schedule_type" NOT NULL,
     "amount" MONEY NOT NULL,
     "day_of_week" INTEGER,
@@ -20,7 +20,7 @@ CREATE TABLE "pay_schedule" (
 
 -- CreateTable
 CREATE TABLE "biller" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" VARCHAR NOT NULL,
     "category" "biller_category",
     "day_of_month" TEXT NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE "biller" (
 
 -- CreateTable
 CREATE TABLE "payday" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "day" INTEGER NOT NULL,
     "month" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
@@ -42,12 +42,12 @@ CREATE TABLE "payday" (
 
 -- CreateTable
 CREATE TABLE "payment" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "month" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
     "amount" MONEY NOT NULL,
-    "biller_id" BIGINT NOT NULL,
-    "payday_id" BIGINT NOT NULL,
+    "biller_id" INTEGER NOT NULL,
+    "payday_id" INTEGER NOT NULL,
 
     CONSTRAINT "payment_pkey" PRIMARY KEY ("id")
 );

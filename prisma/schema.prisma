@@ -9,7 +9,7 @@ generator client {
 }
 
 model pay_schedule {
-  id           BigInt        @id @default(autoincrement())
+  id           Int           @id @default(autoincrement()) @db.Integer
   type         schedule_type
   amount       Decimal       @db.Money
   day_of_week  Int?
@@ -20,7 +20,7 @@ model pay_schedule {
 }
 
 model biller {
-  id             BigInt           @id @default(autoincrement())
+  id             Int              @id @default(autoincrement()) @db.Integer
   name           String           @db.VarChar
   category       biller_category?
   day_of_month   String
@@ -29,7 +29,7 @@ model biller {
 }
 
 model payday {
-  id       BigInt    @id @default(autoincrement())
+  id       Int       @id @default(autoincrement()) @db.Integer
   day      Int
   month    Int
   year     Int
@@ -38,12 +38,12 @@ model payday {
 }
 
 model payment {
-  id        BigInt  @id @default(autoincrement())
+  id        Int     @id @default(autoincrement()) @db.Integer
   month     Int
   year      Int
   amount    Decimal @db.Money
-  biller_id BigInt
-  payday_id BigInt
+  biller_id Int
+  payday_id Int
   biller    biller  @relation(fields: [biller_id], references: [id])
   payday    payday  @relation(fields: [payday_id], references: [id])
 }
@@ -57,10 +57,10 @@ enum schedule_type {
 }
 
 enum biller_category {
-  electricity
-  water
-  gas
-  phone
-  internet
-  auto
+  Electricity
+  Water
+  Gas
+  Phone
+  Internet
+  Auto
 }
