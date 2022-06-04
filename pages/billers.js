@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { Fragment, useEffect, useReducer, useState } from "react";
 import {
   Box,
   Button,
@@ -62,7 +62,7 @@ const Billers = () => {
   };
 
   const createBiller = () => {
-    axios.post("/api/billers/create", newBiller).then(() => {
+    axios.post("/api/billers/new", newBiller).then(() => {
       setShowCreate(false);
       getBillers();
     });
@@ -76,24 +76,28 @@ const Billers = () => {
     dispatchNewBiller({ type: "NAME", name });
   const handleNewBillerCategory = (category) =>
     dispatchNewBiller({ type: "CATEGORY", category });
-  const handleNewBillerDOM = (date_of_month) =>
-    dispatchNewBiller({ type: "DOM", date_of_month });
+  const handleNewBillerDOM = (day_of_month) =>
+    dispatchNewBiller({ type: "DOM", day_of_month });
   const handleNewBillerDefault = (default_amount) =>
     dispatchNewBiller({ type: "DEFAULT", default_amount });
 
-  const body = billers.length ? (
-    billers.map((biller) => (
-      <>
-        <TableCell>{biller.name}</TableCell>
-        <TableCell>{biller.category}</TableCell>
-        <TableCell>{biller.day}</TableCell>
-        <TableCell>{biller.default_value}</TableCell>
-      </>
-    ))
-  ) : (
-    <TableCell colSpan={4} align="center">
-      No users
-    </TableCell>
+  const body = (
+    <TableRow>
+      {billers.length ? (
+        billers.map((biller) => (
+          <Fragment key={biller.id}>
+            <TableCell>{biller.name}</TableCell>
+            <TableCell>{biller.category}</TableCell>
+            <TableCell>{biller.day_of_month}</TableCell>
+            <TableCell>{biller.default_value}</TableCell>
+          </Fragment>
+        ))
+      ) : (
+        <TableCell colSpan={4} align="center">
+          No users
+        </TableCell>
+      )}
+    </TableRow>
   );
 
   const create = (
@@ -118,12 +122,12 @@ const Billers = () => {
             fullWidth
             onChange={(e) => handleNewBillerCategory(e.target.value)}
           >
-            <MenuItem value={"electricity"}>Electricity</MenuItem>
-            <MenuItem value={"water"}>Water</MenuItem>
-            <MenuItem value={"gas"}>Gas</MenuItem>
-            <MenuItem value={"phone"}>Phone</MenuItem>
-            <MenuItem value={"internet"}>Internet</MenuItem>
-            <MenuItem value={"auto"}>Auto</MenuItem>
+            <MenuItem value={"Electricity"}>Electricity</MenuItem>
+            <MenuItem value={"Water"}>Water</MenuItem>
+            <MenuItem value={"Gas"}>Gas</MenuItem>
+            <MenuItem value={"Phone"}>Phone</MenuItem>
+            <MenuItem value={"Internet"}>Internet</MenuItem>
+            <MenuItem value={"Auto"}>Auto</MenuItem>
           </Select>
         </Box>
 
