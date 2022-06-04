@@ -113,7 +113,7 @@ const MyApp = ({ Component, pageProps }) => {
           name="description"
           content="Web site created using create-react-app"
         />
-        <title>boupon</title>
+        <title>budgit</title>
       </Head>
       <ThemeProvider theme={theme}>
         {/* <CssBaseline />
