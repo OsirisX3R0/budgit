@@ -21,6 +21,7 @@ import {
   defaultBiller,
   newBillerReducer,
 } from "../src/reducers/newBillerReducer";
+import BillersTable from "../src/components/billers/BillersTable";
 
 const Billers = () => {
   const [billers, setBillers] = useState([]);
@@ -104,28 +105,6 @@ const Billers = () => {
   useEffect(() => {
     getBillers();
   }, []);
-
-  const body = billers.length ? (
-    billers.map((biller) => (
-      <TableRow
-        key={biller.id}
-        onClick={() => edit(biller)}
-        hover
-        sx={{ cursor: "pointer" }}
-      >
-        <TableCell>{biller.name}</TableCell>
-        <TableCell>{biller.category}</TableCell>
-        <TableCell>{biller.day_of_month}</TableCell>
-        <TableCell>{biller.default_value}</TableCell>
-      </TableRow>
-    ))
-  ) : (
-    <TableRow>
-      <TableCell colSpan={4} align="center">
-        No users
-      </TableCell>
-    </TableRow>
-  );
 
   const buttonText = createMode ? "Create" : "Save";
 
@@ -248,17 +227,7 @@ const Billers = () => {
           + New Biller
         </Button>
       </Box>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell>Day of Month</TableCell>
-            <TableCell>Default</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{body}</TableBody>
-      </Table>
+      <BillersTable billers={billers} onRowClick={(biller) => edit(biller)} />
       {modal}
     </Container>
   );
