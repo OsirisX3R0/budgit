@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
+import ModalBase from "../src/components/core/ModalBase";
 
 const defaultBiller = {
   name: "",
@@ -42,16 +43,6 @@ const newBillerReducer = (state, action) => {
     default:
       return state;
   }
-};
-
-const modalStyles = {
-  maxWidth: "400px",
-  backgroundColor: "#f5f5f5",
-  color: "#333",
-  border: "1px solid #aaa",
-  borderRadius: "3px",
-  margin: "1rem auto",
-  padding: "1rem",
 };
 
 const Billers = () => {
@@ -162,111 +153,109 @@ const Billers = () => {
   const buttonText = createMode ? "Create" : "Save";
 
   const modal = (
-    <Modal open={showModal} onClose={close}>
-      <Box sx={modalStyles}>
-        <Typography variant="h3">New Biller</Typography>
+    <ModalBase open={showModal} onClose={close}>
+      <Typography variant="h3">New Biller</Typography>
 
-        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-          <TextField
-            label="Name"
-            variant="standard"
-            fullWidth
-            value={biller.name}
-            onChange={(e) => handleNewBillerName(e.target.value)}
-          />
-        </Box>
-
-        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-          <Select
-            label="Category"
-            value={biller.category}
-            fullWidth
-            onChange={(e) => handleNewBillerCategory(e.target.value)}
-          >
-            <MenuItem value={"Electricity"}>Electricity</MenuItem>
-            <MenuItem value={"Water"}>Water</MenuItem>
-            <MenuItem value={"Gas"}>Gas</MenuItem>
-            <MenuItem value={"Phone"}>Phone</MenuItem>
-            <MenuItem value={"Internet"}>Internet</MenuItem>
-            <MenuItem value={"Auto"}>Auto</MenuItem>
-          </Select>
-        </Box>
-
-        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-          <Select
-            label="Day of Month"
-            value={biller.day_of_month}
-            fullWidth
-            onChange={(e) => handleNewBillerDOM(e.target.value)}
-          >
-            <MenuItem value={"1st"}>1st</MenuItem>
-            <MenuItem value={"2nd"}>2nd</MenuItem>
-            <MenuItem value={"3rd"}>3rd</MenuItem>
-            <MenuItem value={"4th"}>4th</MenuItem>
-            <MenuItem value={"5th"}>5th</MenuItem>
-            <MenuItem value={"6th"}>6th</MenuItem>
-            <MenuItem value={"7th"}>7th</MenuItem>
-            <MenuItem value={"8th"}>8th</MenuItem>
-            <MenuItem value={"9th"}>9th</MenuItem>
-            <MenuItem value={"10th"}>10th</MenuItem>
-            <MenuItem value={"11th"}>11th</MenuItem>
-            <MenuItem value={"12th"}>12th</MenuItem>
-            <MenuItem value={"13th"}>13th</MenuItem>
-            <MenuItem value={"14th"}>14th</MenuItem>
-            <MenuItem value={"15th"}>15th</MenuItem>
-            <MenuItem value={"16th"}>16th</MenuItem>
-            <MenuItem value={"17th"}>17th</MenuItem>
-            <MenuItem value={"18th"}>18th</MenuItem>
-            <MenuItem value={"19th"}>19th</MenuItem>
-            <MenuItem value={"20th"}>20th</MenuItem>
-            <MenuItem value={"21th"}>21th</MenuItem>
-            <MenuItem value={"22th"}>22th</MenuItem>
-            <MenuItem value={"23th"}>23th</MenuItem>
-            <MenuItem value={"24th"}>24th</MenuItem>
-            <MenuItem value={"25th"}>25th</MenuItem>
-            <MenuItem value={"26th"}>26th</MenuItem>
-            <MenuItem value={"27th"}>27th</MenuItem>
-            <MenuItem value={"28th"}>28th</MenuItem>
-            <MenuItem value={"29th"}>29th</MenuItem>
-            <MenuItem value={"30th"}>30th</MenuItem>
-            <MenuItem value={"last"}>last</MenuItem>
-          </Select>
-        </Box>
-
-        <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-          <TextField
-            type="number"
-            label="Default Amount"
-            variant="standard"
-            fullWidth
-            value={biller.default_amount}
-            onChange={(e) => handleNewBillerDefault(e.target.value)}
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-          />
-        </Box>
-
-        <LoadingButton
-          variant="contained"
-          color="success"
-          loading={loadingBtn}
-          onClick={handleClick}
-        >
-          {buttonText}
-        </LoadingButton>
-        {editMode ? (
-          <Box sx={{ marginLeft: "1rem" }}>
-            <LoadingButton
-              variant="contained"
-              color="error"
-              loading={deleting}
-              onClick={() => deleteBiller(biller.id)}
-            >
-              Delete
-            </LoadingButton>
-          </Box>
-        ) : null}
+      <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+        <TextField
+          label="Name"
+          variant="standard"
+          fullWidth
+          value={biller.name}
+          onChange={(e) => handleNewBillerName(e.target.value)}
+        />
       </Box>
-    </Modal>
+
+      <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+        <Select
+          label="Category"
+          value={biller.category}
+          fullWidth
+          onChange={(e) => handleNewBillerCategory(e.target.value)}
+        >
+          <MenuItem value={"Electricity"}>Electricity</MenuItem>
+          <MenuItem value={"Water"}>Water</MenuItem>
+          <MenuItem value={"Gas"}>Gas</MenuItem>
+          <MenuItem value={"Phone"}>Phone</MenuItem>
+          <MenuItem value={"Internet"}>Internet</MenuItem>
+          <MenuItem value={"Auto"}>Auto</MenuItem>
+        </Select>
+      </Box>
+
+      <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+        <Select
+          label="Day of Month"
+          value={biller.day_of_month}
+          fullWidth
+          onChange={(e) => handleNewBillerDOM(e.target.value)}
+        >
+          <MenuItem value={"1st"}>1st</MenuItem>
+          <MenuItem value={"2nd"}>2nd</MenuItem>
+          <MenuItem value={"3rd"}>3rd</MenuItem>
+          <MenuItem value={"4th"}>4th</MenuItem>
+          <MenuItem value={"5th"}>5th</MenuItem>
+          <MenuItem value={"6th"}>6th</MenuItem>
+          <MenuItem value={"7th"}>7th</MenuItem>
+          <MenuItem value={"8th"}>8th</MenuItem>
+          <MenuItem value={"9th"}>9th</MenuItem>
+          <MenuItem value={"10th"}>10th</MenuItem>
+          <MenuItem value={"11th"}>11th</MenuItem>
+          <MenuItem value={"12th"}>12th</MenuItem>
+          <MenuItem value={"13th"}>13th</MenuItem>
+          <MenuItem value={"14th"}>14th</MenuItem>
+          <MenuItem value={"15th"}>15th</MenuItem>
+          <MenuItem value={"16th"}>16th</MenuItem>
+          <MenuItem value={"17th"}>17th</MenuItem>
+          <MenuItem value={"18th"}>18th</MenuItem>
+          <MenuItem value={"19th"}>19th</MenuItem>
+          <MenuItem value={"20th"}>20th</MenuItem>
+          <MenuItem value={"21th"}>21th</MenuItem>
+          <MenuItem value={"22th"}>22th</MenuItem>
+          <MenuItem value={"23th"}>23th</MenuItem>
+          <MenuItem value={"24th"}>24th</MenuItem>
+          <MenuItem value={"25th"}>25th</MenuItem>
+          <MenuItem value={"26th"}>26th</MenuItem>
+          <MenuItem value={"27th"}>27th</MenuItem>
+          <MenuItem value={"28th"}>28th</MenuItem>
+          <MenuItem value={"29th"}>29th</MenuItem>
+          <MenuItem value={"30th"}>30th</MenuItem>
+          <MenuItem value={"last"}>last</MenuItem>
+        </Select>
+      </Box>
+
+      <Box sx={{ width: "100%", marginBottom: "1rem" }}>
+        <TextField
+          type="number"
+          label="Default Amount"
+          variant="standard"
+          fullWidth
+          value={biller.default_amount}
+          onChange={(e) => handleNewBillerDefault(e.target.value)}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+        />
+      </Box>
+
+      <LoadingButton
+        variant="contained"
+        color="success"
+        loading={loadingBtn}
+        onClick={handleClick}
+      >
+        {buttonText}
+      </LoadingButton>
+      {editMode ? (
+        <Box sx={{ marginLeft: "1rem" }}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            loading={deleting}
+            onClick={() => deleteBiller(biller.id)}
+          >
+            Delete
+          </LoadingButton>
+        </Box>
+      ) : null}
+    </ModalBase>
   );
 
   return (
