@@ -1,11 +1,10 @@
-import { Fragment, useEffect, useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import {
   Box,
   Button,
   Container,
   InputAdornment,
   MenuItem,
-  Modal,
   Select,
   Table,
   TableBody,
@@ -18,32 +17,10 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 import ModalBase from "../src/components/core/ModalBase";
-
-const defaultBiller = {
-  name: "",
-  category: "",
-  day_of_month: "",
-  default_amount: "",
-};
-
-const newBillerReducer = (state, action) => {
-  switch (action.type) {
-    case "NAME":
-      return { ...state, name: action.name };
-    case "CATEGORY":
-      return { ...state, category: action.category };
-    case "DOM":
-      return { ...state, day_of_month: action.day_of_month };
-    case "DEFAULT":
-      return { ...state, default_amount: action.default_amount };
-    case "EDIT":
-      return action.biller;
-    case "RESET":
-      return defaultBiller;
-    default:
-      return state;
-  }
-};
+import {
+  defaultBiller,
+  newBillerReducer,
+} from "../src/reducers/newBillerReducer";
 
 const Billers = () => {
   const [billers, setBillers] = useState([]);
