@@ -5,13 +5,21 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useContext, useEffect } from "react";
+import { BillersContext } from "../../context/BillersContext";
 
-const BillersTable = ({ billers, onRowClick }) => {
+const BillersTable = () => {
+  const { billers, create, edit, getBillers } = useContext(BillersContext);
+
+  useEffect(() => {
+    getBillers();
+  }, []);
+
   const body = billers.length ? (
     billers.map((biller) => (
       <TableRow
         key={biller.id}
-        onClick={() => onRowClick(biller)}
+        onClick={() => edit(biller)}
         hover
         sx={{ cursor: "pointer" }}
       >
@@ -30,17 +38,24 @@ const BillersTable = ({ billers, onRowClick }) => {
   );
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Name</TableCell>
-          <TableCell>Category</TableCell>
-          <TableCell>Day of Month</TableCell>
-          <TableCell>Default</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>{body}</TableBody>
-    </Table>
+    <>
+      <Box sx={{ textAlign: "right" }}>
+        <Button variant="contained" color="success" onClick={create}>
+          + New Biller
+        </Button>
+      </Box>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Category</TableCell>
+            <TableCell>Day of Month</TableCell>
+            <TableCell>Default</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{body}</TableBody>
+      </Table>
+    </>
   );
 };
 
