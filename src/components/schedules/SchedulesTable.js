@@ -24,13 +24,17 @@ const SchedulesTable = () => {
   const dates = (schedule) => {
     switch (schedule.frequency) {
       case "semimonthly":
-        return `${schedule.first_date}/${schedule.second_date}`;
+        return `${dayjs(schedule.first_date).format("MM/DD/YYYY")}/${dayjs(
+          schedule.second_date
+        ).format("MM/DD/YYYY")}`;
       case "weekly":
-        return dayjs().isoWeekday(schedule.day_of_week);
+        return dayjs().isoWeekday(schedule.day_of_week).day();
       case "monthly":
-        return schedule.day || schedule.day_of_month;
+        return dayjs(schedule.day || schedule.day_of_month).format(
+          "MM/DD/YYYY"
+        );
       default:
-        return schedule.next_due_date;
+        return dayjs(schedule.next_due_date).format("MM/DD/YYYY");
     }
   };
 
@@ -44,9 +48,9 @@ const SchedulesTable = () => {
       >
         <TableCell>{capitalize(schedule.frequency)}</TableCell>
         <TableCell>{schedule.amount ? `$${schedule.amount}` : null}</TableCell>
-        <TableCell>
+        {/* <TableCell>
           {dayjs(schedule.next_due_date).format("MM/DD/YYYY")}
-        </TableCell>
+        </TableCell> */}
         <TableCell>{dates(schedule)}</TableCell>
         {/* <TableCell>
           {schedule.default_amount ? `$${schedule.default_amount}` : ""}
