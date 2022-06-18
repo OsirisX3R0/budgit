@@ -8,7 +8,7 @@ const SelectMenu = ({ items, ...selectProps }) => {
         </MenuItem>
       ))
     : null;
-  return <Select {...selectPropt}>{menu}</Select>;
+  return <Select {...selectProps}>{menu}</Select>;
 };
 
 export default SelectMenu;

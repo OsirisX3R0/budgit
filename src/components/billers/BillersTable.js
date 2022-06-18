@@ -27,7 +27,7 @@ const BillersTable = () => {
       >
         <TableCell>{biller.name}</TableCell>
         <TableCell>{biller.category}</TableCell>
-        <TableCell>{biller.day_of_month}</TableCell>
+        <TableCell>{biller.next_due_date}</TableCell>
         <TableCell>{biller.default_value}</TableCell>
       </TableRow>
     ))
@@ -51,7 +51,7 @@ const BillersTable = () => {
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Category</TableCell>
-            <TableCell>Day of Month</TableCell>
+            <TableCell>Next Due Date</TableCell>
             <TableCell>Default</TableCell>
           </TableRow>
         </TableHead>

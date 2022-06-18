@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Box, InputAdornment, TextField, Typography } from "@mui/material";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { LoadingButton } from "@mui/lab";
 
-import ModalBase from "../components/core/ModalBase";
-import SelectMenu from "../components/core/SelectMenu";
-import { BillersContext } from "./BillersContext";
+import ModalBase from "../core/ModalBase";
+import SelectMenu from "../core/SelectMenu";
+import { BillersContext } from "../../context/BillersContext";
 
 const categories = ["Electricity", "Water", "Gas", "Phone", "Internet", "Auto"];
 
@@ -84,12 +85,19 @@ const BillersModal = () => {
       </Box>
 
       <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-        <SelectMenu
+        {/* <SelectMenu
           label="Day of Month"
           value={biller.day_of_month}
           fullWidth
           items={days}
           onChange={(e) => handleNewBillerDOM(e.target.value)}
+        /> */}
+        <MobileDatePicker
+          label="Next Due Date"
+          inputFormat="MM/dd/yyyy"
+          value={biller.next_due_date}
+          onChange={(date) => handleNewBillerDOM(date)}
+          renderInput={(params) => <TextField {...params} />}
         />
       </Box>
 
