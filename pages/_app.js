@@ -10,6 +10,7 @@ import Header from "../src/components/core/Header";
 import FooterNav from "../src/components/core/FooterNav";
 import { red, green } from "@mui/material/colors";
 // import App from "next/app";
+import "../src/utils/dayjs";
 
 const MyApp = ({ Component, pageProps }) => {
   // const [colorTheme, setColorTheme] = useLocalStorage(

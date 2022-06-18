@@ -93,6 +93,7 @@ const BillersModal = () => {
         <Box sx={{ width: "100%", marginBottom: "1rem" }}>
           <InputLabel htmlFor="defaultAmount">Default Amount</InputLabel>
           <Input
+            id="defaultAmount"
             type="number"
             variant="standard"
             fullWidth
