@@ -15,9 +15,9 @@ model pay_schedule {
   day_of_week   Int?
   day_of_month  day_of_month?
   day           Int?
-  next_due_date DateTime?
-  first_date    Int?
-  second_date   Int?
+  next_due_date DateTime?     @db.Date
+  first_date    DateTime?     @db.Date
+  second_date   DateTime?     @db.Date
 }
 
 model biller {
@@ -25,7 +25,7 @@ model biller {
   name           String           @db.VarChar
   category       biller_category?
   frequency      frequency        @default(monthly)
-  next_due_date  DateTime?
+  next_due_date  DateTime?        @db.Date
   default_amount Float?
   payments       payment[]
 }
