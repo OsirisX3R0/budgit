@@ -85,13 +85,6 @@ const BillersModal = () => {
       </Box>
 
       <Box sx={{ width: "100%", marginBottom: "1rem" }}>
-        {/* <SelectMenu
-          label="Day of Month"
-          value={biller.day_of_month}
-          fullWidth
-          items={days}
-          onChange={(e) => handleNewBillerDOM(e.target.value)}
-        /> */}
         <MobileDatePicker
           label="Next Due Date"
           inputFormat="MM/dd/yyyy"

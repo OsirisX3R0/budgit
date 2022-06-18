@@ -17,8 +17,8 @@ export const BillersProvider = ({ children }) => {
   const handleNewBillerName = (name) => dispatchBiller({ type: "NAME", name });
   const handleNewBillerCategory = (category) =>
     dispatchBiller({ type: "CATEGORY", category });
-  const handleNewBillerDOM = (day_of_month) =>
-    dispatchBiller({ type: "DOM", day_of_month });
+  const handleNewBillerDOM = (next_due_date) =>
+    dispatchBiller({ type: "DUE", next_due_date });
   const handleNewBillerDefault = (default_amount) =>
     dispatchBiller({ type: "DEFAULT", default_amount });
   const editBiller = (biller) => dispatchBiller({ type: "EDIT", biller });

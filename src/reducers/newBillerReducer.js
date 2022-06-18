@@ -1,7 +1,7 @@
 export const defaultBiller = {
   name: "",
   category: "",
-  day_of_month: "",
+  next_due_date: "",
   default_amount: "",
 };
 
@@ -11,8 +11,8 @@ export const newBillerReducer = (state, action) => {
       return { ...state, name: action.name };
     case "CATEGORY":
       return { ...state, category: action.category };
-    case "DOM":
-      return { ...state, day_of_month: action.day_of_month };
+    case "DUE":
+      return { ...state, next_due_date: action.next_due_date };
     case "DEFAULT":
       return { ...state, default_amount: action.default_amount };
     case "EDIT":
