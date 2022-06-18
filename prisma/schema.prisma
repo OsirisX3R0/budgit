@@ -9,21 +9,22 @@ generator client {
 }
 
 model pay_schedule {
-  id           Int           @id @default(autoincrement()) @db.Integer
-  type         schedule_type
-  amount       Decimal       @db.Money
-  day_of_week  Int?
-  day_of_month Int?
-  next_occur   Int?
-  first_date   Int?
-  second_date  Int?
+  id            Int       @id @default(autoincrement()) @db.Integer
+  frequency     frequency
+  amount        Decimal   @db.Money
+  day_of_week   Int?
+  day_of_month  Int?
+  next_due_date DateTime?
+  first_date    Int?
+  second_date   Int?
 }
 
 model biller {
   id             Int              @id @default(autoincrement()) @db.Integer
   name           String           @db.VarChar
   category       biller_category?
-  day_of_month   String
+  frequency      frequency
+  next_due_date  DateTime?
   default_amount Int?
   payments       payment[]
 }
@@ -48,7 +49,7 @@ model payment {
   payday    payday  @relation(fields: [payday_id], references: [id])
 }
 
-enum schedule_type {
+enum frequency {
   onetime
   weekly
   biweekly
