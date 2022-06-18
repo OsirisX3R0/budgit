@@ -1,8 +1,9 @@
 export const defaultBiller = {
   name: "",
   category: "",
+  frequency: "monthly",
   next_due_date: "",
-  default_amount: "",
+  default_amount: null,
 };
 
 export const newBillerReducer = (state, action) => {
@@ -11,10 +12,15 @@ export const newBillerReducer = (state, action) => {
       return { ...state, name: action.name };
     case "CATEGORY":
       return { ...state, category: action.category };
+    case "FREQ":
+      return { ...state, frequency: action.frequency };
     case "DUE":
-      return { ...state, next_due_date: action.next_due_date };
+      return {
+        ...state,
+        next_due_date: action.next_due_date.toDate(),
+      };
     case "DEFAULT":
-      return { ...state, default_amount: action.default_amount };
+      return { ...state, default_amount: +action.default_amount };
     case "EDIT":
       return action.biller;
     case "RESET":

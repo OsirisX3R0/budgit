@@ -17,8 +17,10 @@ export const BillersProvider = ({ children }) => {
   const handleNewBillerName = (name) => dispatchBiller({ type: "NAME", name });
   const handleNewBillerCategory = (category) =>
     dispatchBiller({ type: "CATEGORY", category });
-  const handleNewBillerDOM = (next_due_date) =>
+  const handleNewBillerNextDue = (next_due_date) =>
     dispatchBiller({ type: "DUE", next_due_date });
+  const handleNewBillerFrequency = (frequency) =>
+    dispatchBiller({ type: "FREQ", frequency });
   const handleNewBillerDefault = (default_amount) =>
     dispatchBiller({ type: "DEFAULT", default_amount });
   const editBiller = (biller) => dispatchBiller({ type: "EDIT", biller });
@@ -96,7 +98,8 @@ export const BillersProvider = ({ children }) => {
         biller,
         handleNewBillerName,
         handleNewBillerCategory,
-        handleNewBillerDOM,
+        handleNewBillerNextDue,
+        handleNewBillerFrequency,
         handleNewBillerDefault,
         close,
         edit,

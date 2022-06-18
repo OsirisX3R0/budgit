@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  capitalize,
   Table,
   TableBody,
   TableCell,
@@ -8,6 +9,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { useContext, useEffect } from "react";
+import dayjs from "dayjs";
+
 import { BillersContext } from "../../context/BillersContext";
 
 const BillersTable = () => {
@@ -27,8 +30,13 @@ const BillersTable = () => {
       >
         <TableCell>{biller.name}</TableCell>
         <TableCell>{biller.category}</TableCell>
-        <TableCell>{biller.next_due_date}</TableCell>
-        <TableCell>{biller.default_value}</TableCell>
+        <TableCell>
+          {dayjs(biller.next_due_date).format("MM/DD/YYYY")}
+        </TableCell>
+        <TableCell>{capitalize(biller.frequency)}</TableCell>
+        <TableCell>
+          {biller.default_amount ? `$${biller.default_amount}` : ""}
+        </TableCell>
       </TableRow>
     ))
   ) : (
@@ -52,7 +60,7 @@ const BillersTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>Next Due Date</TableCell>
-            <TableCell>Default</TableCell>
+            <TableCell>Default Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>{body}</TableBody>
