@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Table,
   TableBody,
   TableCell,
