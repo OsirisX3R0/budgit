@@ -9,11 +9,12 @@ generator client {
 }
 
 model pay_schedule {
-  id            Int       @id @default(autoincrement()) @db.Integer
-  frequency     frequency @default(monthly)
+  id            Int           @id @default(autoincrement()) @db.Integer
+  frequency     frequency     @default(monthly)
   amount        Float
   day_of_week   Int?
-  day_of_month  Int?
+  day_of_month  day_of_month?
+  day           Int?
   next_due_date DateTime?
   first_date    Int?
   second_date   Int?
@@ -55,6 +56,17 @@ enum frequency {
   biweekly
   semimonthly
   monthly
+}
+
+enum day_of_month {
+  firstbusiness
+  lastbusiness
+  firstfriday
+  lastfriday
+  secondwed
+  thirdwed
+  fourthwed
+  specific
 }
 
 enum biller_category {
