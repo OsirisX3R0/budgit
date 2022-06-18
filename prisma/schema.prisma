@@ -10,8 +10,8 @@ generator client {
 
 model pay_schedule {
   id            Int       @id @default(autoincrement()) @db.Integer
-  frequency     frequency
-  amount        Decimal   @db.Money
+  frequency     frequency @default(monthly)
+  amount        Float
   day_of_week   Int?
   day_of_month  Int?
   next_due_date DateTime?
@@ -23,9 +23,9 @@ model biller {
   id             Int              @id @default(autoincrement()) @db.Integer
   name           String           @db.VarChar
   category       biller_category?
-  frequency      frequency
+  frequency      frequency        @default(monthly)
   next_due_date  DateTime?
-  default_amount Int?
+  default_amount Float?
   payments       payment[]
 }
 
@@ -34,19 +34,19 @@ model payday {
   day      Int
   month    Int
   year     Int
-  amount   Int
+  amount   Float
   payments payment[]
 }
 
 model payment {
-  id        Int     @id @default(autoincrement()) @db.Integer
+  id        Int    @id @default(autoincrement()) @db.Integer
   month     Int
   year      Int
-  amount    Decimal @db.Money
+  amount    Float
   biller_id Int
   payday_id Int
-  biller    biller  @relation(fields: [biller_id], references: [id])
-  payday    payday  @relation(fields: [payday_id], references: [id])
+  biller    biller @relation(fields: [biller_id], references: [id])
+  payday    payday @relation(fields: [payday_id], references: [id])
 }
 
 enum frequency {
