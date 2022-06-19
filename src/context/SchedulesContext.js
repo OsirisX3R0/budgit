@@ -61,7 +61,6 @@ export const SchedulesProvider = ({ children }) => {
 
   const getSchedules = () => {
     axios.get("/api/schedules").then(({ data }) => {
-      debugger;
       setSchedules(data);
     });
   };

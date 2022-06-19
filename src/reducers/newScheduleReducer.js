@@ -32,7 +32,6 @@ export const newScheduleReducer = (state, action) => {
         next_due_date: action.next_due_date.toDate(),
       };
     case "FIRST":
-      debugger;
       return {
         ...state,
         first_date: action.first_date.toDate(),

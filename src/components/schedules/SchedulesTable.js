@@ -12,6 +12,8 @@ import { useContext, useEffect } from "react";
 import dayjs from "dayjs";
 
 import { SchedulesContext } from "../../context/SchedulesContext";
+import formatOrdinal from "../../utils/formatOrdinal";
+import formatDayOfMonth from "../../utils/formatDayOfMonth";
 
 const SchedulesTable = () => {
   const { schedules, create, edit, getSchedules } =
@@ -21,18 +23,18 @@ const SchedulesTable = () => {
     getSchedules();
   }, []);
 
-  const dates = (schedule) => {
+  const formatDate = (schedule) => {
     switch (schedule.frequency) {
       case "semimonthly":
-        return `${dayjs(schedule.first_date).format("MM/DD/YYYY")}/${dayjs(
+        return `${dayjs(schedule.first_date).format("MM/DD/YYYY")} | ${dayjs(
           schedule.second_date
         ).format("MM/DD/YYYY")}`;
       case "weekly":
-        return dayjs().isoWeekday(schedule.day_of_week).day();
+        return dayjs().isoWeekday(schedule.day_of_week).format("ddd");
       case "monthly":
-        return dayjs(schedule.day || schedule.day_of_month).format(
-          "MM/DD/YYYY"
-        );
+        return schedule.day
+          ? formatOrdinal(schedule.day)
+          : formatDayOfMonth(schedule.day_of_month);
       default:
         return dayjs(schedule.next_due_date).format("MM/DD/YYYY");
     }
@@ -51,7 +53,7 @@ const SchedulesTable = () => {
         {/* <TableCell>
           {dayjs(schedule.next_due_date).format("MM/DD/YYYY")}
         </TableCell> */}
-        <TableCell>{dates(schedule)}</TableCell>
+        <TableCell>{formatDate(schedule)}</TableCell>
         {/* <TableCell>
           {schedule.default_amount ? `$${schedule.default_amount}` : ""}
         </TableCell> */}

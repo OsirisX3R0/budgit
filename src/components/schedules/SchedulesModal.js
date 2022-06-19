@@ -14,7 +14,6 @@ import { LoadingButton, LocalizationProvider } from "@mui/lab";
 import ModalBase from "../core/ModalBase";
 import SelectMenu from "../core/SelectMenu";
 import { SchedulesContext } from "../../context/SchedulesContext";
-import { frequency } from "@prisma/client";
 
 const frequencies = [
   { value: "onetime", text: "One-Time" },
@@ -59,6 +58,7 @@ const SchedulesModal = () => {
     editMode,
     createSchedule,
     updateSchedule,
+    deleteSchedule,
     deleting,
     loadingBtn,
     handleNewScheduleNextDue,
@@ -185,12 +185,12 @@ const SchedulesModal = () => {
           {buttonText}
         </LoadingButton>
         {editMode ? (
-          <Box sx={{ marginLeft: "1rem" }}>
+          <Box component="span" sx={{ marginLeft: "1rem" }}>
             <LoadingButton
               variant="contained"
               color="error"
               loading={deleting}
-              onClick={() => deleteSchedule(biller.id)}
+              onClick={() => deleteSchedule(schedule.id)}
             >
               Delete
             </LoadingButton>
