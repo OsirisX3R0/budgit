@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 
 import { SchedulesContext } from "../../context/SchedulesContext";
 import formatOrdinal from "../../utils/formatOrdinal";
-import formatDayOfMonth from "../../utils/formatDayOfMonth";
+import { frequencies, of_month } from "../../utils/items";
 
 const SchedulesTable = () => {
   const { schedules, create, edit, getSchedules } =
@@ -34,7 +34,7 @@ const SchedulesTable = () => {
       case "monthly":
         return schedule.day
           ? formatOrdinal(schedule.day)
-          : formatDayOfMonth(schedule.day_of_month);
+          : of_month[schedule.day_of_month];
       default:
         return dayjs(schedule.next_due_date).format("MM/DD/YYYY");
     }
@@ -48,7 +48,7 @@ const SchedulesTable = () => {
         hover
         sx={{ cursor: "pointer" }}
       >
-        <TableCell>{capitalize(schedule.frequency)}</TableCell>
+        <TableCell>{frequencies[schedule.frequency]}</TableCell>
         <TableCell>{schedule.amount ? `$${schedule.amount}` : null}</TableCell>
         {/* <TableCell>
           {dayjs(schedule.next_due_date).format("MM/DD/YYYY")}
@@ -62,7 +62,7 @@ const SchedulesTable = () => {
   ) : (
     <TableRow>
       <TableCell colSpan={4} align="center">
-        No users
+        No schedules
       </TableCell>
     </TableRow>
   );
