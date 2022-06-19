@@ -41,8 +41,8 @@ const BillersTable = () => {
     ))
   ) : (
     <TableRow>
-      <TableCell colSpan={4} align="center">
-        No users
+      <TableCell colSpan={5} align="center">
+        No billers
       </TableCell>
     </TableRow>
   );
@@ -60,6 +60,7 @@ const BillersTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>Next Due Date</TableCell>
+            <TableCell>Frequency</TableCell>
             <TableCell>Default Amount</TableCell>
           </TableRow>
         </TableHead>
