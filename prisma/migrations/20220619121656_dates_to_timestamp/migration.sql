@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "biller" ALTER COLUMN "next_due_date" SET DATA TYPE TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "pay_schedule" ALTER COLUMN "next_due_date" SET DATA TYPE TIMESTAMP,
+ALTER COLUMN "first_date" SET DATA TYPE TIMESTAMP,
+ALTER COLUMN "second_date" SET DATA TYPE TIMESTAMP;
