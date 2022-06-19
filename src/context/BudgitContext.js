@@ -19,7 +19,7 @@ export const BudgitProvider = ({ children }) => {
 
   useEffect(() => {
     getBudgit().then(() => {
-      if (!payments.length) axios.post("/api/budgit", { month, year });
+      if (!payments.length) axios.post("/api/budgit/generate", { month, year });
     });
   }, []);
 

@@ -1,8 +1,8 @@
-const Schedule = require("../../../controllers/schedules.controller");
+const Schedules = require("../../../controllers/schedules.controller");
 
 module.exports = async (_, res) => {
   try {
-    let schedules = await Schedule.get();
+    let schedules = await Schedules.get();
 
     res.json(schedules);
   } catch (err) {
