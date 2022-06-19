@@ -50,13 +50,7 @@ const SchedulesTable = () => {
       >
         <TableCell>{frequencies[schedule.frequency]}</TableCell>
         <TableCell>{schedule.amount ? `$${schedule.amount}` : null}</TableCell>
-        {/* <TableCell>
-          {dayjs(schedule.next_due_date).format("MM/DD/YYYY")}
-        </TableCell> */}
         <TableCell>{formatDate(schedule)}</TableCell>
-        {/* <TableCell>
-          {schedule.default_amount ? `$${schedule.default_amount}` : ""}
-        </TableCell> */}
       </TableRow>
     ))
   ) : (
@@ -80,7 +74,6 @@ const SchedulesTable = () => {
             <TableCell>Frequency</TableCell>
             <TableCell>Amount</TableCell>
             <TableCell>Dates</TableCell>
-            {/* <TableCell>Default Amount</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>{body}</TableBody>
