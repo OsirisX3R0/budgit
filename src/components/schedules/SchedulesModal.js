@@ -14,40 +14,7 @@ import { LoadingButton, LocalizationProvider } from "@mui/lab";
 import ModalBase from "../core/ModalBase";
 import SelectMenu from "../core/SelectMenu";
 import { SchedulesContext } from "../../context/SchedulesContext";
-
-const frequencies = [
-  { value: "onetime", text: "One-Time" },
-  { value: "weekly", text: "Weekly" },
-  { value: "biweekly", text: "Bi-Weekly" },
-  { value: "monthly", text: "Monthly" },
-  { value: "semimonthly", text: "Semi-Monthly" },
-];
-
-const of_week = [
-  { value: 0, text: "Sun" },
-  { value: 1, text: "Mon" },
-  { value: 2, text: "Tue" },
-  { value: 3, text: "Wed" },
-  { value: 4, text: "Thu" },
-  { value: 5, text: "Fri" },
-  { value: 6, text: "Sat" },
-];
-
-const of_month = [
-  { value: "firstbusiness", text: "First Business" },
-  { value: "lastbusiness", text: "Last Business" },
-  { value: "firstfriday", text: "First Friday" },
-  { value: "lastfriday", text: "Last Friday" },
-  { value: "secondwed", text: "Second Wednesday" },
-  { value: "thirdwed", text: "Third Wednesday" },
-  { value: "fourthwed", text: "Fourth Wednesday" },
-  { value: "specific", text: "Specific" },
-];
-
-const days = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24, 25, 26, 27, 28, 29, 30, 31,
-];
+import { frequencies, of_month, of_week, days } from "../../utils/items";
 
 const SchedulesModal = () => {
   const {

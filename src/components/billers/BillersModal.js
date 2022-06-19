@@ -14,16 +14,7 @@ import { LoadingButton, LocalizationProvider } from "@mui/lab";
 import ModalBase from "../core/ModalBase";
 import SelectMenu from "../core/SelectMenu";
 import { BillersContext } from "../../context/BillersContext";
-
-const categories = ["Electricity", "Water", "Gas", "Phone", "Internet", "Auto"];
-
-const frequencies = [
-  { value: "onetime", text: "One-Time" },
-  { value: "weekly", text: "Weekly" },
-  { value: "biweekly", text: "Bi-Weekly" },
-  { value: "monthly", text: "Monthly" },
-  { value: "semimonthly", text: "Semi-Monthly" },
-];
+import { categories, frequencies } from "../../utils/items";
 
 const BillersModal = () => {
   const {
